@@ -27,10 +27,15 @@ public class Veccy extends Application {
         model.addFeature(new LineFeature(model));
         model.addFeature(new PointFeature(model));
         model.addFeature(new PolygonFeature(model));
+        model.addFeature(new PathFeature(model));
         model.addFeature(new TextFeature(model));
         model.addFeature(new ClearFeature(model));
         model.addFeature(new BezierFeature(model));
 
+
+
+        DoubleLinkedList list = new DoubleLinkedList();
+        list.reverse();
         //fractal(model);
         //noise(model);
         //testTransform(model);
@@ -63,7 +68,7 @@ public class Veccy extends Application {
         model.addShape(c);
 
         model.addShape(new Line(400, 140, 450, 200));
-        Line l = new Line(400, 140, 450, 200, Color.rgb(100, 255, 100, 0.5));
+        Line l = new Line(400, 140, 450, 200);
         l.setTransform(TransformFactory.createHorizontalMirroring());
         model.addShape(l);
 

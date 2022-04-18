@@ -1,6 +1,12 @@
 package at.fhhgb.mtd.gop.veccy.data;
 
-public class DoubleLinkedList {
+import at.fhhgb.mtd.gop.veccy.shapes.Shape;
+
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public class DoubleLinkedList implements Iterable<Shape> {
     private Node head, tail;
 
     public DoubleLinkedList() {
@@ -9,7 +15,7 @@ public class DoubleLinkedList {
     }
 
     /** Prepend a new node to the beginning */
-    public void prepend(int val) {
+    public void prepend(Shape val) {
         Node newNode = new Node();
         newNode.value = val;
 
@@ -25,7 +31,7 @@ public class DoubleLinkedList {
     }
 
     /** Append a new node at the end */
-    public void append(int val) {
+    public void append(Shape val) {
         Node newNode = new Node();
         newNode.value = val;
 
@@ -41,59 +47,63 @@ public class DoubleLinkedList {
     }
 
     /** Return the value of the node with the index */
-    public int get(int index) {
-        Node node = this.head;
-        int i = 0;
+    public Shape get(int index) throws IndexOutOfBoundsException {
+        if (index >= 0 && index < this.size()) {
+            Node node = this.head;
+            int i = 0;
 
-        while (node != null) {
-            if (index == i) {
-                return node.value;
+            while (node != null) {
+                if (index == i) {
+                    return node.value;
+                }
+                i++;
+                node = node.next;
             }
-            i++;
-            node = node.next;
+        } else {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
         }
-        return Integer.MIN_VALUE;
+        return null;
     }
 
     /** Return the value and delete the first node */
-    public int removeFirst() {
-        int v = this.head.value;
-        Node node = this.head.next;
-        if (node != null) {
+    public Shape removeFirst() {
+        Shape v = this.head.value;
+        if (this.head.next != null) {
+            Node node = this.head.next;
             this.head = node;
             node.prev = null;
             return v;
         }
-        return Integer.MIN_VALUE;
+        return null;
     }
 
     /** Return the value of the first node */
-    public int peekFirst() {
+    public Shape peekFirst() {
         if (this.head != null) {
             return this.head.value;
         }
 
-        return Integer.MIN_VALUE;
+        return null;
     }
     /** Return the value and delete the last node */
-    public int removeLast() {
-        int v;
-        Node node = this.tail.prev;
-        if (node != null) {
+    public Shape removeLast() {
+        Shape v;
+        if (this.tail.prev != null) {
+            Node node = this.tail.prev;
             v = this.tail.value;
             this.tail = node;
             node.prev = null;
             return v;
         }
-        return Integer.MIN_VALUE;
+        return null;
     }
 
     /** Return the value of the last node */
-    public int peekLast() {
+    public Shape peekLast() {
         if (this.tail != null) {
             return this.tail.value;
         }
-        return Integer.MIN_VALUE;
+        return null;
     }
 
 
@@ -126,7 +136,7 @@ public class DoubleLinkedList {
     /** Deletes all elements */
     public void clear() {
         Node node = this.head;
-        while (node != null) {;
+        while (node != null) {
             node.prev = null;
             node = node.next;
         }
@@ -148,5 +158,22 @@ public class DoubleLinkedList {
             str.deleteCharAt(str.length() - 2);
         }
         return str.toString();
+    }
+
+    /** Erstellt eine neue Instanz des DoubleLinkedListIterator, die verwendet
+     * werden kann, um via for(Shape s : list) über die Liste zu iterieren. */
+    @Override
+    public Iterator<Shape> iterator() {
+        return new DoubleLinkedListIterator(this.head);
+    }
+
+    @Override
+    public void forEach(Consumer<? super Shape> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<Shape> spliterator() {
+        return Iterable.super.spliterator();
     }
 }
