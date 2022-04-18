@@ -1,139 +1,134 @@
 package at.fhhgb.mtd.gop.veccy.data;
-
+import at.fhhgb.mtd.gop.veccy.shapes.Rectangle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DoubleLinkedListTest {
+    Rectangle rec = new Rectangle();
+    Rectangle rec2 = new Rectangle(100, 100, 100, 100);
+    Rectangle rec3 = new Rectangle(200, 200, 100, 100);
+    Rectangle rec4 = new Rectangle(300, 300, 100, 100);
+    Rectangle rec5 = new Rectangle(400, 400, 100, 100);
 
     @Test
     void prepend() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(1, list.get(0));
+        assertEquals(rec5, list.get(0));
     }
 
     @Test
     void append() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(5, list.get(5));
+        assertEquals(new Rectangle(100, 100, 100, 100), list.get(4));
     }
 
     @Test
     void get() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(5, list.get(5));
+        assertEquals(rec2, list.get(4));
     }
 
     @Test
     void removeFirst() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(1, list.removeFirst());
+        assertEquals(rec5, list.removeFirst());
     }
 
     @Test
     void peekFirst() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(1, list.peekFirst());
+        assertEquals(rec5, list.peekFirst());
     }
 
     @Test
     void removeLast() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(5, list.removeLast());
+        assertEquals(rec2, list.removeLast());
     }
 
     @Test
     void peekLast() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(5, list.peekLast());
+        assertEquals(rec2, list.peekLast());
     }
 
     @Test
     void reverse() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
         list.reverse();
 
-        assertEquals(1, list.peekLast());
+        assertEquals(rec5, list.peekLast());
 
     }
 
     @Test
     void size() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
 
-        assertEquals(6, list.size());
+        assertEquals(5, list.size());
     }
 
     @Test
     void clear() {
         DoubleLinkedList list = new DoubleLinkedList();
-        list.append(4);
-        list.append(5);
-        list.prepend(3);
-        list.prepend(3);
-        list.prepend(2);
-        list.prepend(1);
+        list.append(rec);
+        list.append(rec2);
+        list.prepend(rec3);
+        list.prepend(rec4);
+        list.prepend(rec5);
         list.clear();
 
         assertEquals(0, list.size());
