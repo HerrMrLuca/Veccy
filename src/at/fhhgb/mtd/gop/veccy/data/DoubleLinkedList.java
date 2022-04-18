@@ -47,16 +47,20 @@ public class DoubleLinkedList implements Iterable<Shape> {
     }
 
     /** Return the value of the node with the index */
-    public Shape get(int index) {
-        Node node = this.head;
-        int i = 0;
+    public Shape get(int index) throws IndexOutOfBoundsException {
+        if (index >= 0 && index < this.size()) {
+            Node node = this.head;
+            int i = 0;
 
-        while (node != null) {
-            if (index == i) {
-                return node.value;
+            while (node != null) {
+                if (index == i) {
+                    return node.value;
+                }
+                i++;
+                node = node.next;
             }
-            i++;
-            node = node.next;
+        } else {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
         }
         return null;
     }
@@ -64,8 +68,8 @@ public class DoubleLinkedList implements Iterable<Shape> {
     /** Return the value and delete the first node */
     public Shape removeFirst() {
         Shape v = this.head.value;
-        Node node = this.head.next;
-        if (node != null) {
+        if (this.head.next != null) {
+            Node node = this.head.next;
             this.head = node;
             node.prev = null;
             return v;
@@ -84,8 +88,8 @@ public class DoubleLinkedList implements Iterable<Shape> {
     /** Return the value and delete the last node */
     public Shape removeLast() {
         Shape v;
-        Node node = this.tail.prev;
-        if (node != null) {
+        if (this.tail.prev != null) {
+            Node node = this.tail.prev;
             v = this.tail.value;
             this.tail = node;
             node.prev = null;

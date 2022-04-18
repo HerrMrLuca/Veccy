@@ -23,8 +23,12 @@ public class DoubleLinkedListIterator implements Iterator<Shape> {
      * Setzt weiters currentNode auf den nächsten Knoten, damit ein erneuter
      * Aufruf von next() das nächste Shape der Liste liefert. */
     @Override
-    public Shape next() {
-        currentNode = currentNode.next;
-        return this.currentNode.prev.value;
+    public Shape next() throws NullPointerException {
+        if (hasNext()) {
+            currentNode = currentNode.next;
+            return this.currentNode.prev.value;
+        } else {
+            throw new NullPointerException("The Element is null");
+        }
     }
 }

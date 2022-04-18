@@ -34,10 +34,8 @@ public class Veccy extends Application {
 
 
 
-
-
-
-
+        DoubleLinkedList list = new DoubleLinkedList();
+        list.reverse();
         //fractal(model);
         //noise(model);
         //testTransform(model);

@@ -1,6 +1,9 @@
 package at.fhhgb.mtd.gop.veccy.data;
 import at.fhhgb.mtd.gop.veccy.shapes.Rectangle;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +23,7 @@ class DoubleLinkedListTest {
         list.prepend(rec4);
         list.prepend(rec5);
 
-        assertEquals(rec5, list.get(0));
+        assertEquals(new Rectangle(400, 400, 100, 100), list.get(0));
     }
 
     @Test
@@ -45,6 +48,9 @@ class DoubleLinkedListTest {
         list.prepend(rec5);
 
         assertEquals(rec2, list.get(4));
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(10);
+        });
     }
 
     @Test
@@ -57,6 +63,12 @@ class DoubleLinkedListTest {
         list.prepend(rec5);
 
         assertEquals(rec5, list.removeFirst());
+        assertEquals(rec4, list.removeFirst());
+        list.removeFirst();
+        assertEquals(rec, list.removeFirst());
+        assertNull(list.removeFirst());
+        list.removeFirst();
+        assertNull(list.removeFirst());
     }
 
     @Test
@@ -65,9 +77,11 @@ class DoubleLinkedListTest {
         list.append(rec);
         list.append(rec2);
         list.prepend(rec3);
-        list.prepend(rec4);
-        list.prepend(rec5);
 
+        list.prepend(rec4);
+        assertEquals(rec4, list.peekFirst());
+
+        list.prepend(rec5);
         assertEquals(rec5, list.peekFirst());
     }
 
@@ -106,12 +120,14 @@ class DoubleLinkedListTest {
         list.reverse();
 
         assertEquals(rec5, list.peekLast());
+        assertEquals(rec2, list.peekFirst());
 
     }
 
     @Test
     void size() {
         DoubleLinkedList list = new DoubleLinkedList();
+        assertEquals(0, list.size());
         list.append(rec);
         list.append(rec2);
         list.prepend(rec3);
@@ -132,5 +148,6 @@ class DoubleLinkedListTest {
         list.clear();
 
         assertEquals(0, list.size());
+        assertNull(list.peekFirst());
     }
 }
