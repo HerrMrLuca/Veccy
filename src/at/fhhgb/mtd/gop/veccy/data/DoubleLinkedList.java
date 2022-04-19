@@ -59,10 +59,9 @@ public class DoubleLinkedList implements Iterable<Shape> {
                 i++;
                 node = node.next;
             }
-        } else {
-            throw new IndexOutOfBoundsException("Index is out of bounds");
         }
-        return null;
+
+        throw new IndexOutOfBoundsException("Index is out of bounds");
     }
 
     /** Return the value and delete the first node */

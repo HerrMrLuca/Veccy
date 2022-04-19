@@ -33,7 +33,9 @@ public class Path extends Shape {
     public void draw(GraphicsContext graphicsContext) {
         super.draw(graphicsContext);
         double[][] coordinates = getCoordinates();
-        graphicsContext.strokePolygon(coordinates[0], coordinates[1], coordinates[0].length);
+        for (int i = 0; i < coordinates[0].length - 1; i++) {
+            graphicsContext.strokeLine(coordinates[0][i], coordinates[1][i], coordinates[0][i + 1], coordinates[1][i + 1]);
+        }
     }
 
     public int[][] getPoints() {

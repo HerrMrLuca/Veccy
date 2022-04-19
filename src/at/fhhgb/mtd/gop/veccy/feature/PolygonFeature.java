@@ -43,7 +43,6 @@ public class PolygonFeature implements NamedFeature {
 
         if (this.selected && currentPolygon != null) {
             currentPolygon.addPoint(i, i1, currentPolygon.getAmount());
-            System.out.println(currentPolygon);
         }
     }
 
