@@ -24,6 +24,7 @@ public class Veccy extends Application {
         CanvasModel model = veccyGUI.getModel();
         model.addFeature(new RectangleFeature(model));
         model.addFeature(new CircleFeature(model));
+        model.addFeature(new TriangleFeature(model));
         model.addFeature(new LineFeature(model));
         model.addFeature(new PointFeature(model));
         model.addFeature(new PolygonFeature(model));
@@ -31,14 +32,43 @@ public class Veccy extends Application {
         model.addFeature(new TextFeature(model));
         model.addFeature(new ClearFeature(model));
         model.addFeature(new BezierFeature(model));
-
-
+        model.addFeature(new PencilFeature(model));
 
         DoubleLinkedList list = new DoubleLinkedList();
-        list.reverse();
+        model.addFeature(new TranslateFeature(model, list));
+        model.addFeature(new RotateFeature(model, list));
+        model.addFeature(new TransformFeature(model, list));
+
         //fractal(model);
         //noise(model);
         //testTransform(model);
+
+
+        // Akzeptiert eine Funktion, die einen int index als Parameter
+        // akzeptiert.
+        model.setCurrentlySelectedShapeHandler((index) -> {
+            if (list.size() > index){
+                for (Shape s: list) {
+                    if (s != null) {
+                        s.setSelected(false);
+                    }
+                }
+                list.get(index).setSelected(true);
+            }
+        });
+
+        // Akzeptiert eine Funktion, die ein DrawableShape Objekt als
+        // Parameter akzeptiert.
+        model.setShapeCreationHandler((DrawableShape) -> {
+            list.append((Shape) DrawableShape);
+        });
+
+        // Akzeptiert eine Funktion, die einen int index als Parameter
+        // akzeptiert.
+        model.setShapeDeletionHandler((index) -> {
+            model.removeShape(list.get(index));
+            list.remove(index);
+        });
     }
 
     public void noise(CanvasModel model) {
@@ -57,45 +87,45 @@ public class Veccy extends Application {
         }
     }
 
-    public void testTransform(CanvasModel model) {
-        Circle b = new Circle(200, 190, 50, Color.rgb(255,255,255));
-        Circle c = new Circle(200, 190, 50, Color.rgb(255,255,255));
-        b.setSmoothness(5);
-        c.setSmoothness(5);
-        model.addShape(c);
-        c.setFillColor(Color.rgb(100, 255,50, 0.5));
-        c.setTransform(TransformFactory.createVerticalMirroring());
-        model.addShape(c);
+//    public void testTransform(CanvasModel model) {
+//        Circle b = new Circle(200, 190, 50, Color.rgb(255,255,255));
+//        Circle c = new Circle(200, 190, 50, Color.rgb(255,255,255));
+//        b.setSmoothness(5);
+//        c.setSmoothness(5);
+//        model.addShape(c);
+//        c.setFillColor(Color.rgb(100, 255,50, 0.5));
+//        c.setTransform(TransformFactory.createVerticalMirroring());
+//        model.addShape(c);
+//
+//        model.addShape(new Line(400, 140, 450, 200));
+//        Line l = new Line(400, 140, 450, 200);
+//        l.setTransform(TransformFactory.createHorizontalMirroring());
+//        model.addShape(l);
+//
+//        model.addShape(new Rectangle(150, 350, 100, 100));
+//        Rectangle rec = new Rectangle(150, 350, 100, 100, Color.rgb(100, 255, 100, 0.5));
+//        rec.setTransform(TransformFactory.createScaling(2, 1.5));
+//        model.addShape(rec);
+//
+//        model.addShape(new Triangle(600, 190, 50, 3));
+//        Triangle t = new Triangle(600, 190, 50, Color.rgb(100, 255,100, 0.5), 3);
+//        t.setTransform(TransformFactory.createRotation(Math.toRadians(30)));
+//        model.addShape(t);
+//
+//        model.addShape(new Rectangle(550, 320, 100, 100));
+//        Rectangle rec2 = new Rectangle(550, 320, 100, 100, Color.rgb(100, 255, 100, 0.5));
+//        rec2.setTransform(TransformFactory.createTranslation(50, 50));
+//        model.addShape(rec2);
+//
+//        model.addShape(new Text(100, 100, "Vertical", 10));
+//        model.addShape(new Text(320, 100, "horizontal", 10));
+//        model.addShape(new Text(550, 100, "rotation", 10));
+//        model.addShape(new Text(100, 300, "scale", 10));
+//        model.addShape(new Text(550, 300, "translate", 10));
+//        model.addShape(new Text(50, 20, "UE04 Wassermeyer", 35));
+//    }
 
-        model.addShape(new Line(400, 140, 450, 200));
-        Line l = new Line(400, 140, 450, 200);
-        l.setTransform(TransformFactory.createHorizontalMirroring());
-        model.addShape(l);
-
-        model.addShape(new Rectangle(150, 350, 100, 100));
-        Rectangle rec = new Rectangle(150, 350, 100, 100, Color.rgb(100, 255, 100, 0.5));
-        rec.setTransform(TransformFactory.createScaling(2, 1.5));
-        model.addShape(rec);
-
-        model.addShape(new Triangle(600, 190, 50, 3));
-        Triangle t = new Triangle(600, 190, 50, Color.rgb(100, 255,100, 0.5), 3);
-        t.setTransform(TransformFactory.createRotation(Math.toRadians(30)));
-        model.addShape(t);
-
-        model.addShape(new Rectangle(550, 320, 100, 100));
-        Rectangle rec2 = new Rectangle(550, 320, 100, 100, Color.rgb(100, 255, 100, 0.5));
-        rec2.setTransform(TransformFactory.createTranslation(50, 50));
-        model.addShape(rec2);
-
-        model.addShape(new Text(100, 100, "Vertical", 10));
-        model.addShape(new Text(320, 100, "horizontal", 10));
-        model.addShape(new Text(550, 100, "rotation", 10));
-        model.addShape(new Text(100, 300, "scale", 10));
-        model.addShape(new Text(550, 300, "translate", 10));
-        model.addShape(new Text(50, 20, "UE04 Wassermeyer", 35));
-    }
-
-    /*public void ocean(CanvasModel model) {
+    public void ocean(CanvasModel model) {
         // background
         for (int i = 0; i < 40; i++) {
             model.addShape(new Rectangle(0, i * 15, 1000, 50, Color.rgb(32 + i * 5, 88 + i * 2, 180 - i * 4)));
@@ -209,7 +239,7 @@ public class Veccy extends Application {
             x1 = x2;
             y1 = y2;
         }
-    }*/
+    }
 
     public void fractal(CanvasModel model) {
 
